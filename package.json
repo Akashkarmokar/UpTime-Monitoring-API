@@ -1,0 +1,19 @@
+{
+  "name": "apiPro",
+  "main": "index.js",
+  "repository": "git@github.com:Akashkarmokar/UpTime-Monitoring-API.git",
+  "author": "Akash <akashcsemu@gmail.com",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
+  },
+  "version": "1.0.0"
+}
