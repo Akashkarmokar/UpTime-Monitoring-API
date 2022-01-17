@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+# My  Custome git ignore command
+
+# ignoring .data folder which folder use for database 
+.data

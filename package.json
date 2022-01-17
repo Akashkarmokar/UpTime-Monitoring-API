@@ -5,7 +5,8 @@
   "author": "Akash <akashcsemu@gmail.com",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "nodemon index"
+    "start": "NODE_ENV=staging nodemon index",
+    "production":"NODE_ENV=production nodemon index"
   },
   "devDependencies": {
     "eslint": "^8.6.0",
