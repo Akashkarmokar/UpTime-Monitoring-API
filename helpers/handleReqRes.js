@@ -2,6 +2,7 @@
 const url = require('url');
 const { StringDecoder } = require('string_decoder'); // taking StringDecoder class only
 const routes = require('../routes');
+const { parseJson } = require('./utilities');
 
 // Module Scaffolding
 const handler = {};
@@ -32,14 +33,6 @@ handler.handleReqRes = (req, res) => {
 
     // choosing valid Handler to handle user define url
     const choosenHandler = routes[trimedPath] ? routes[trimedPath] : routes.notFound;
-    choosenHandler(requestProperties, (statusCode, payload) => {
-        const finalStatusCode = typeof statusCode === 'number' ? statusCode : 500;
-        let finalPayload = typeof payload === 'object' ? payload : {};
-        finalPayload = JSON.stringify(finalPayload);
-        // return final response
-        res.writeHead(finalStatusCode);
-        res.end(finalPayload);
-    });
 
     // listening request object's data event
     req.on('data', (buffer) => {
@@ -49,6 +42,16 @@ handler.handleReqRes = (req, res) => {
     // listening request object's end event . it will be call when stramming is ended
     req.on('end', () => {
         reqBody += reqBodyDecoder.end();
+        requestProperties.body = parseJson(reqBody);
+        choosenHandler(requestProperties, (statusCode, payload) => {
+            const finalStatusCode = typeof statusCode === 'number' ? statusCode : 500;
+            let finalPayload = typeof payload === 'object' ? payload : {};
+            finalPayload = JSON.stringify(finalPayload);
+            // return final response
+            res.setHeader('Content-Type', 'application/json');
+            res.writeHead(finalStatusCode);
+            res.end(finalPayload);
+        });
         // console.log(reqBody);
     });
 };
