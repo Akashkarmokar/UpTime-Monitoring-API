@@ -107,10 +107,97 @@ handler.tokens.get = (requestProperties, resCallback) => {
 };
 
 // token handler for put method
-handler.tokens.put = (requestProperties, resCallback) => {};
+handler.tokens.put = (requestProperties, resCallback) => {
+    const tokenId =
+        typeof requestProperties.body.tokenId === 'string' &&
+        requestProperties.body.tokenId.trim().length === 20
+            ? requestProperties.body.tokenId.trim()
+            : false;
+
+    const extend = !!(
+        typeof requestProperties.body.extend === 'boolean' && requestProperties.body.extend === true
+    );
+
+    if (tokenId && extend) {
+        data.read('tokens', tokenId, (readErr, tokenData) => {
+            const tokenObj = parseJson(tokenData);
+            if (tokenObj.expires > Date.now()) {
+                tokenObj.expires = Date.now() + 60 * 60 * 1000;
+                // store the updated token
+                data.update('tokens', tokenId, tokenObj, (updateErr) => {
+                    if (!updateErr) {
+                        resCallback(200, {
+                            message: 'Token updated successfully',
+                        });
+                    } else {
+                        resCallback(500, {
+                            error: 'There was a server side error',
+                        });
+                    }
+                });
+            } else {
+                resCallback(400, {
+                    error: 'Token already expired',
+                });
+            }
+        });
+    } else {
+        resCallback(400, {
+            error: 'There was a problem in your request',
+        });
+    }
+};
 
 // token handler for delete method
-handler.tokens.delete = (requestProperties, resCallback) => {};
+handler.tokens.delete = (requestProperties, resCallback) => {
+    // check the phone number is valid
+    const tokenId =        typeof requestProperties.queryStrinObj.tokenId === 'string' &&
+        requestProperties.queryStrinObj.tokenId.trim().length === 20
+            ? requestProperties.queryStrinObj.tokenId.trim()
+            : false;
+    if (tokenId) {
+        // look up the user
+        data.read('tokens', tokenId, (err, tokenData) => {
+            if (!err && tokenData) {
+                data.delete('tokens', tokenId, (deleteErr) => {
+                    if (!deleteErr) {
+                        resCallback(200, {
+                            error: 'Token was successfully deleted',
+                        });
+                    } else {
+                        resCallback(500, {
+                            error: 'There was a server side problem',
+                        });
+                    }
+                });
+            } else {
+                resCallback(500, {
+                    error: 'There was a server side problem',
+                });
+            }
+        });
+    } else {
+        resCallback(404, {
+            error: 'Requested token not found',
+        });
+    }
+};
 
+// token verify function
+handler.tokens.verify = (tokenId, phone, callback) => {
+    console.log(`${tokenId}---${phone}`);
+    data.read('tokens', tokenId, (err, tokenData) => {
+        if (!err && tokenData) {
+            console.log('bbb');
+            if (parseJson(tokenData).phone === phone && parseJson(tokenData).expires > Date.now()) {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        } else {
+            callback(false);
+        }
+    });
+};
 // Export module
 module.exports = handler;
