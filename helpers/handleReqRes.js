@@ -52,7 +52,6 @@ handler.handleReqRes = (req, res) => {
             res.writeHead(finalStatusCode);
             res.end(finalPayload);
         });
-        // console.log(reqBody);
     });
 };
 

@@ -21,35 +21,37 @@ handler.UserHandler = (requestProperties, callback) => {
 };
 
 handler.users = {}; // it contain coressponding function
-
+/**
+ *  From  client side send data from body
+  "firstName":"Akash",
+  "lastName":"kmk",
+  "phone":01911111111,
+  "password":"abcd",
+  "tosAgreement":true
+ */
 handler.users.post = (requestProperties, callback) => {
-    const firstName =
-        typeof requestProperties.body.firstName === 'string'
-        && requestProperties.body.firstName.trim().length > 0
+    const firstName =        typeof requestProperties.body.firstName === 'string' &&
+        requestProperties.body.firstName.trim().length > 0
             ? requestProperties.body.firstName.trim()
             : false;
 
-    const lastName =
-        typeof requestProperties.body.lastName === 'string'
-        && requestProperties.body.lastName.trim().length > 0
+    const lastName =        typeof requestProperties.body.lastName === 'string' &&
+        requestProperties.body.lastName.trim().length > 0
             ? requestProperties.body.lastName.trim()
             : false;
 
-    const phone =
-        typeof requestProperties.body.phone === 'string'
-        && requestProperties.body.phone.trim().length > 0
+    const phone =        typeof requestProperties.body.phone === 'string' &&
+        requestProperties.body.phone.trim().length > 0
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =
-        typeof requestProperties.body.password === 'string'
-        && requestProperties.body.password.trim().length > 0
+    const password =        typeof requestProperties.body.password === 'string' &&
+        requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
 
-    const tosAgreement =
-        typeof requestProperties.body.tosAgreement === 'boolean'
-        && requestProperties.body.tosAgreement
+    const tosAgreement =        typeof requestProperties.body.tosAgreement === 'boolean' &&
+        requestProperties.body.tosAgreement
             ? requestProperties.body.tosAgreement
             : false;
 
@@ -91,15 +93,13 @@ handler.users.post = (requestProperties, callback) => {
 
 handler.users.get = (requestProperties, Rescallback) => {
     // check the phone number is valid
-    const phone =
-        typeof requestProperties.queryStrinObj.phone === 'string'
-        && requestProperties.queryStrinObj.phone.trim().length === 11
+    const phone =        typeof requestProperties.queryStrinObj.phone === 'string' &&
+        requestProperties.queryStrinObj.phone.trim().length === 11
             ? requestProperties.queryStrinObj.phone.trim()
             : false;
     if (phone) {
         // verify token
-        const tokenId =
-            typeof requestProperties.headersObj.token === 'string'
+        const tokenId =            typeof requestProperties.headersObj.token === 'string'
                 ? requestProperties.headersObj.token
                 : false;
         tokenHandler.tokens.verify(tokenId, phone, (token) => {
@@ -130,35 +130,30 @@ handler.users.get = (requestProperties, Rescallback) => {
 };
 
 handler.users.put = (requestProperties, Rescallback) => {
-    const firstName =
-        typeof requestProperties.body.firstName === 'string'
-        && requestProperties.body.firstName.trim().length > 0
+    const firstName =        typeof requestProperties.body.firstName === 'string' &&
+        requestProperties.body.firstName.trim().length > 0
             ? requestProperties.body.firstName.trim()
             : false;
 
-    const lastName =
-        typeof requestProperties.body.lastName === 'string'
-        && requestProperties.body.lastName.trim().length > 0
+    const lastName =        typeof requestProperties.body.lastName === 'string' &&
+        requestProperties.body.lastName.trim().length > 0
             ? requestProperties.body.lastName.trim()
             : false;
 
-    const phone =
-        typeof requestProperties.body.phone === 'string'
-        && requestProperties.body.phone.trim().length > 0
+    const phone =        typeof requestProperties.body.phone === 'string' &&
+        requestProperties.body.phone.trim().length > 0
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =
-        typeof requestProperties.body.password === 'string'
-        && requestProperties.body.password.trim().length > 0
+    const password =        typeof requestProperties.body.password === 'string' &&
+        requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
 
     if (phone) {
         if (firstName || lastName || password) {
             // verify token
-            const tokenId =
-                typeof requestProperties.headersObj.token === 'string'
+            const tokenId =                typeof requestProperties.headersObj.token === 'string'
                     ? requestProperties.headersObj.token
                     : false;
             tokenHandler.tokens.verify(tokenId, phone, (token) => {
@@ -214,16 +209,14 @@ handler.users.put = (requestProperties, Rescallback) => {
 // todo : authentication required features not added yet
 handler.users.delete = (requestProperties, Rescallback) => {
     // check the phone number is valid
-    const phone =
-        typeof requestProperties.queryStrinObj.phone === 'string'
-        && requestProperties.queryStrinObj.phone.trim().length > 0
+    const phone =        typeof requestProperties.queryStrinObj.phone === 'string' &&
+        requestProperties.queryStrinObj.phone.trim().length > 0
             ? requestProperties.queryStrinObj.phone.trim()
             : false;
 
     if (phone) {
         // verify token
-        const tokenId =
-            typeof requestProperties.headersObj.token === 'string'
+        const tokenId =            typeof requestProperties.headersObj.token === 'string'
                 ? requestProperties.headersObj.token
                 : false;
         tokenHandler.tokens.verify(tokenId, phone, (token) => {

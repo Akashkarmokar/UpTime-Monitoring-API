@@ -26,13 +26,15 @@ handler.tokens = {};
 
 // token handler for post method
 handler.tokens.post = (requestProperties, resCallback) => {
-    const phone =        typeof requestProperties.body.phone === 'string'
-        && requestProperties.body.phone.trim().length == 11
+    const phone =
+        typeof requestProperties.body.phone === 'string' &&
+        requestProperties.body.phone.trim().length == 11
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =        typeof requestProperties.body.password === 'string'
-        && requestProperties.body.password.trim().length > 0
+    const password =
+        typeof requestProperties.body.password === 'string' &&
+        requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
     console.log(`${phone} -- ${password}`);
@@ -81,9 +83,8 @@ handler.tokens.post = (requestProperties, resCallback) => {
 // token handler for get method
 handler.tokens.get = (requestProperties, resCallback) => {
     // check the tokenId number is valid
-    const tokenId =
-        typeof requestProperties.queryStrinObj.tokenId === 'string'
-        && requestProperties.queryStrinObj.tokenId.trim().length === 20
+    const tokenId =        typeof requestProperties.queryStrinObj.tokenId === 'string' &&
+        requestProperties.queryStrinObj.tokenId.trim().length === 20
             ? requestProperties.queryStrinObj.tokenId
             : false;
 
@@ -108,9 +109,8 @@ handler.tokens.get = (requestProperties, resCallback) => {
 
 // token handler for put method
 handler.tokens.put = (requestProperties, resCallback) => {
-    const tokenId =
-        typeof requestProperties.body.tokenId === 'string' &&
-        requestProperties.body.tokenId.trim().length === 20
+    const tokenId =        typeof requestProperties.body.tokenId === 'string'
+        && requestProperties.body.tokenId.trim().length === 20
             ? requestProperties.body.tokenId.trim()
             : false;
 
@@ -151,8 +151,9 @@ handler.tokens.put = (requestProperties, resCallback) => {
 // token handler for delete method
 handler.tokens.delete = (requestProperties, resCallback) => {
     // check the phone number is valid
-    const tokenId =        typeof requestProperties.queryStrinObj.tokenId === 'string' &&
-        requestProperties.queryStrinObj.tokenId.trim().length === 20
+    const tokenId =
+        typeof requestProperties.queryStrinObj.tokenId === 'string'
+        && requestProperties.queryStrinObj.tokenId.trim().length === 20
             ? requestProperties.queryStrinObj.tokenId.trim()
             : false;
     if (tokenId) {
@@ -185,7 +186,7 @@ handler.tokens.delete = (requestProperties, resCallback) => {
 
 // token verify function
 handler.tokens.verify = (tokenId, phone, callback) => {
-    console.log(`${tokenId}---${phone}`);
+    // console.log(`${tokenId}---${phone}`);
     data.read('tokens', tokenId, (err, tokenData) => {
         if (!err && tokenData) {
             console.log('bbb');
