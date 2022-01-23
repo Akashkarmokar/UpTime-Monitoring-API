@@ -16,7 +16,18 @@ handler.checkHandler = (requestProperties, resCallback) => {
 };
 handler.checks = {};
 
-// post method
+/*
+    User send data from body
+    Required data : protocol,url,method,successCodes,timeoutSeconds as payload / body
+    And token as headerObject / Meta Data
+    {
+        "protocol":"http",
+        "url":"google.com",
+        "method":"GET",
+        "successCodes":[200,201,301],
+        "timeoutSeconds":2
+    }
+*/
 handler.checks.post = (requestProperties, resCallback) => {
     // validate inputs
 
