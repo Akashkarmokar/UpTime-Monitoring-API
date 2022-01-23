@@ -2,7 +2,7 @@
 const http = require('http');
 const { handleReqRes } = require('./helpers/handleReqRes'); // custom module where we handle request and response
 const environments = require('./helpers/environments'); // custom module where we handle env variable and configuration
-const data = require('./lib/data'); // custom module where built lib for CRUD operation with file system
+
 // app object
 const app = {};
 

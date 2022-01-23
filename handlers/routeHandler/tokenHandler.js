@@ -24,17 +24,22 @@ handler.tokenHandler = (requestProperties, resCallback) => {
 // which call from tokenHandler function
 handler.tokens = {};
 
-// token handler for post method
+/*
+    Token Handler for post method
+    User send 11 digit phone and password as a payload / body
+    {
+        "phone":"01911111111",
+        "password":"abcd"
+    }
+ */
 handler.tokens.post = (requestProperties, resCallback) => {
-    const phone =
-        typeof requestProperties.body.phone === 'string' &&
-        requestProperties.body.phone.trim().length == 11
+    const phone =        typeof requestProperties.body.phone === 'string'
+        && requestProperties.body.phone.trim().length == 11
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =
-        typeof requestProperties.body.password === 'string' &&
-        requestProperties.body.password.trim().length > 0
+    const password =        typeof requestProperties.body.password === 'string'
+        && requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
     console.log(`${phone} -- ${password}`);
@@ -80,11 +85,17 @@ handler.tokens.post = (requestProperties, resCallback) => {
     }
 };
 
-// token handler for get method
+/*
+    Token Handler for get method.
+    when user wants to know about token details
+    User send tokenId as query string
+    ex: http://localhost:3000/token?tokenId =
+ */
 handler.tokens.get = (requestProperties, resCallback) => {
     // check the tokenId number is valid
-    const tokenId =        typeof requestProperties.queryStrinObj.tokenId === 'string' &&
-        requestProperties.queryStrinObj.tokenId.trim().length === 20
+    const tokenId =
+        typeof requestProperties.queryStrinObj.tokenId === 'string'
+        && requestProperties.queryStrinObj.tokenId.trim().length === 20
             ? requestProperties.queryStrinObj.tokenId
             : false;
 
@@ -107,16 +118,25 @@ handler.tokens.get = (requestProperties, resCallback) => {
     }
 };
 
-// token handler for put method
+/*
+    Token Handler put method.
+    when user wants to update token expire time
+    User send tokenId and extend as payload/body
+    {
+        "tokenId":"7ruv7ygl8fmo3af982k6",
+        "extend":true
+    }
+ */
 handler.tokens.put = (requestProperties, resCallback) => {
-    const tokenId =        typeof requestProperties.body.tokenId === 'string'
-        && requestProperties.body.tokenId.trim().length === 20
+    const tokenId =
+        typeof requestProperties.body.tokenId === 'string' &&
+        requestProperties.body.tokenId.trim().length === 20
             ? requestProperties.body.tokenId.trim()
             : false;
 
-    const extend = !!(
-        typeof requestProperties.body.extend === 'boolean' && requestProperties.body.extend === true
-    );
+    const extend =
+        typeof requestProperties.body.extend === 'boolean' &&
+        requestProperties.body.extend === true;
 
     if (tokenId && extend) {
         data.read('tokens', tokenId, (readErr, tokenData) => {
@@ -148,12 +168,16 @@ handler.tokens.put = (requestProperties, resCallback) => {
     }
 };
 
-// token handler for delete method
+/*
+    Token Handler delete method.
+    when user wants to delete token
+    User send tokenId as query string
+    Ex; http://localhost:3000/token?tokenId=7ruv7ygl8fmo3af982k6
+ */
 handler.tokens.delete = (requestProperties, resCallback) => {
     // check the phone number is valid
-    const tokenId =
-        typeof requestProperties.queryStrinObj.tokenId === 'string'
-        && requestProperties.queryStrinObj.tokenId.trim().length === 20
+    const tokenId =        typeof requestProperties.queryStrinObj.tokenId === 'string' &&
+        requestProperties.queryStrinObj.tokenId.trim().length === 20
             ? requestProperties.queryStrinObj.tokenId.trim()
             : false;
     if (tokenId) {

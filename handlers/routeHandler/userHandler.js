@@ -21,37 +21,46 @@ handler.UserHandler = (requestProperties, callback) => {
 };
 
 handler.users = {}; // it contain coressponding function
-/**
- *  From  client side send data from body
-  "firstName":"Akash",
-  "lastName":"kmk",
-  "phone":01911111111,
-  "password":"abcd",
-  "tosAgreement":true
- */
+
+/*
+    User send data from body
+    Required data : First name, Last Name, Phone, Password, tosAgreement
+    {
+        "firstName":"Akash",
+        "lastName":"kmk",
+        "phone": "01911111111",
+        "password":"abcd",
+        "tosAgreement":true
+    }
+*/
 handler.users.post = (requestProperties, callback) => {
-    const firstName =        typeof requestProperties.body.firstName === 'string' &&
-        requestProperties.body.firstName.trim().length > 0
+    const firstName =
+        typeof requestProperties.body.firstName === 'string'
+        && requestProperties.body.firstName.trim().length > 0
             ? requestProperties.body.firstName.trim()
             : false;
 
-    const lastName =        typeof requestProperties.body.lastName === 'string' &&
-        requestProperties.body.lastName.trim().length > 0
+    const lastName =
+        typeof requestProperties.body.lastName === 'string'
+        && requestProperties.body.lastName.trim().length > 0
             ? requestProperties.body.lastName.trim()
             : false;
 
-    const phone =        typeof requestProperties.body.phone === 'string' &&
-        requestProperties.body.phone.trim().length > 0
+    const phone =
+        typeof requestProperties.body.phone === 'string'
+        && requestProperties.body.phone.trim().length > 0
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =        typeof requestProperties.body.password === 'string' &&
-        requestProperties.body.password.trim().length > 0
+    const password =
+        typeof requestProperties.body.password === 'string'
+        && requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
 
-    const tosAgreement =        typeof requestProperties.body.tosAgreement === 'boolean' &&
-        requestProperties.body.tosAgreement
+    const tosAgreement =
+        typeof requestProperties.body.tosAgreement === 'boolean'
+        && requestProperties.body.tosAgreement
             ? requestProperties.body.tosAgreement
             : false;
 
@@ -91,15 +100,26 @@ handler.users.post = (requestProperties, callback) => {
     }
 };
 
+/*
+    User get method.
+    phone number is required
+    as query string.
+    Ex: http://localhost:3000/token?phone=01911111111
+    And
+    token as meta data from header
+    ex: token:7ruv7ygl8fmo3af982k6
+ */
 handler.users.get = (requestProperties, Rescallback) => {
     // check the phone number is valid
-    const phone =        typeof requestProperties.queryStrinObj.phone === 'string' &&
-        requestProperties.queryStrinObj.phone.trim().length === 11
+    const phone =
+        typeof requestProperties.queryStrinObj.phone === 'string'
+        && requestProperties.queryStrinObj.phone.trim().length === 11
             ? requestProperties.queryStrinObj.phone.trim()
             : false;
     if (phone) {
         // verify token
-        const tokenId =            typeof requestProperties.headersObj.token === 'string'
+        const tokenId =
+            typeof requestProperties.headersObj.token === 'string'
                 ? requestProperties.headersObj.token
                 : false;
         tokenHandler.tokens.verify(tokenId, phone, (token) => {
@@ -129,31 +149,48 @@ handler.users.get = (requestProperties, Rescallback) => {
     }
 };
 
+/*
+    User put method
+    User send his/her update data as payload / body
+    ex:
+    {
+        "firstName": "hello",
+        "lastName": "kmk",
+        "phone": "01911111111",
+        "password":"abcd"
+    }
+
+ */
 handler.users.put = (requestProperties, Rescallback) => {
-    const firstName =        typeof requestProperties.body.firstName === 'string' &&
-        requestProperties.body.firstName.trim().length > 0
+    const firstName =
+        typeof requestProperties.body.firstName === 'string'
+        && requestProperties.body.firstName.trim().length > 0
             ? requestProperties.body.firstName.trim()
             : false;
 
-    const lastName =        typeof requestProperties.body.lastName === 'string' &&
-        requestProperties.body.lastName.trim().length > 0
+    const lastName =
+        typeof requestProperties.body.lastName === 'string'
+        && requestProperties.body.lastName.trim().length > 0
             ? requestProperties.body.lastName.trim()
             : false;
 
-    const phone =        typeof requestProperties.body.phone === 'string' &&
-        requestProperties.body.phone.trim().length > 0
+    const phone =
+        typeof requestProperties.body.phone === 'string'
+        && requestProperties.body.phone.trim().length > 0
             ? requestProperties.body.phone.trim()
             : false;
 
-    const password =        typeof requestProperties.body.password === 'string' &&
-        requestProperties.body.password.trim().length > 0
+    const password =
+        typeof requestProperties.body.password === 'string'
+        && requestProperties.body.password.trim().length > 0
             ? requestProperties.body.password.trim()
             : false;
 
     if (phone) {
         if (firstName || lastName || password) {
             // verify token
-            const tokenId =                typeof requestProperties.headersObj.token === 'string'
+            const tokenId =
+                typeof requestProperties.headersObj.token === 'string'
                     ? requestProperties.headersObj.token
                     : false;
             tokenHandler.tokens.verify(tokenId, phone, (token) => {
@@ -206,17 +243,28 @@ handler.users.put = (requestProperties, Rescallback) => {
         });
     }
 };
-// todo : authentication required features not added yet
+/*
+    User delete method
+    User send his/her phone number as query string with phone property
+    and token as mete taka with token property
+    Ex: http://localhost:3000/user?phone=01911111111
+    And
+    token as meta data from header
+    ex: token:7ruv7ygl8fmo3af982k6
+
+ */
 handler.users.delete = (requestProperties, Rescallback) => {
     // check the phone number is valid
-    const phone =        typeof requestProperties.queryStrinObj.phone === 'string' &&
-        requestProperties.queryStrinObj.phone.trim().length > 0
+    const phone =
+        typeof requestProperties.queryStrinObj.phone === 'string'
+        && requestProperties.queryStrinObj.phone.trim().length > 0
             ? requestProperties.queryStrinObj.phone.trim()
             : false;
 
     if (phone) {
         // verify token
-        const tokenId =            typeof requestProperties.headersObj.token === 'string'
+        const tokenId =
+            typeof requestProperties.headersObj.token === 'string'
                 ? requestProperties.headersObj.token
                 : false;
         tokenHandler.tokens.verify(tokenId, phone, (token) => {
